@@ -1,12 +1,12 @@
-import json
 import os
+import json
 import numpy as np
-from external_utilities.predominantmelodymakam import PredominantMelodyMakam
+from pitchdistamr_utils import write_to_csv
+from pitchdistamr_utils import convert_to_cent
+from pitchdistamr_utils import get_args_compute_pitch_distribution
 from external_utilities.pitchfilter import PitchFilter
 from external_utilities.toniclastnote import TonicLastNote
-from makamnn_utils import convert_to_cent
-from makamnn_utils import write_to_csv
-from makamnn_utils import get_args_compute_pitch_histograms
+from external_utilities.predominantmelodymakam import PredominantMelodyMakam
 
 
 def main(number_of_bins,
@@ -18,24 +18,24 @@ def main(number_of_bins,
          folder_dir,
          features_save_name,
          classes_save_name):
-    """ This method computes pitch distributions of given recordings
-        by aligning them with respect to the tonic frequency. The obtained
-        distributions are saved as a csv file. There are several options
-        on how to use this file. To use the mode information specified in
-        annotations file, 'annot' should be 1. To use the already extracted
-        pitch values from the directory, 'pitch_files' should be 1. To use
-        the already estimated tonic frequencies included in annotations
-        file, 'annot_tonic' should be 1. If the mode information is to be
-        used, the directory for 'folder_dir' should include the recordings
-        separated by their modes in the following way:
-        'your_dir/mode_A/record_1.wav'
+    """
+
+        This method computes pitch distributions of target recordings
+        and aligns the obtained distributions with respect to the tonic
+        frequency. The obtained distributions are saved as a csv file.
+        To use the mode information specified in annotations file, 'annot'
+        should be 1. To use the already extracted pitch values from the
+        directory, 'pitch_files' should be 1. To use the already estimated
+        tonic frequencies included in annotations
+        file, 'annot_tonic' should be 1. For the required folder structure,
+        README file can be referred.
 
         Parameters
         ----------
         number_of_bins : int
             Number of comma values to divide between 0 and 1200 cent
         first_last_pct : int
-            Whether to include the first and the last x% sections
+            Whether to include the first and the last sections
         pct : float
             Percentage value for the first and the last sections
         annot : int
@@ -46,7 +46,7 @@ def main(number_of_bins,
             Whether to use the estimated tonic frequencies from
             the annotations file
         folder_dir : str
-            Path to the directory of the files
+            Directory of the recordings
         features_save_name : str
             File name for storing feature values
         classes_save_name : str
@@ -163,7 +163,10 @@ def main(number_of_bins,
                 pitch_val[count][(number_of_bins * 2):(number_of_bins * 3)] \
                     = hist_val_ls
 
-            class_val[count][0] = file['makam']
+            if 'mode' in file:
+                class_val[count][0] = file['mode']
+            else:
+                class_val[count][0] = file['makam']
 
             if count % 50 == 0:
                 file_interval = int(50 * np.floor(count / 50))
@@ -227,7 +230,7 @@ def main(number_of_bins,
 
 
 if __name__ == "__main__":
-    args = get_args_compute_pitch_histograms()
+    args = get_args_compute_pitch_distribution()
     main(number_of_bins=args['number_of_bins'],
          first_last_pct=args['first_last_pct'],
          pct=args['pct'],

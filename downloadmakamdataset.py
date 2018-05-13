@@ -1,19 +1,25 @@
 import os
-import urllib.request
 import zipfile
-from makamnn_utils import get_args_download_makam_dataset
+import urllib.request
+from pitchdistamr_utils import get_args_download_makam_dataset
 
 
 def main(directory):
-    """ Downloads the Makam Recognition Dataset
+    """
+        Downloads OTMM Makam Recognition Dataset from
+        https://github.com/MTG/otmm_makam_recognition_dataset/
 
+        Parameters
+        ----------
+        directory : str
+            Target directory to download the dataset into
     """
     if not os.path.exists(directory):
         # initialization
         url = 'https://github.com/MTG/otmm_makam_recognition_dataset/' \
               'archive/dlfm2016.zip'
         filename = 'otmm_makam_recognition_dataset-dlfm2016.zip'
-        target_dir = 'data/'
+        target_dir = directory
 
         # creating the directory
         if not os.path.exists(target_dir):

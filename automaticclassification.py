@@ -1,18 +1,18 @@
+import pickle
 import numpy as np
-from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
+from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import train_test_split as tts
-from sklearn.neural_network import MLPClassifier
-from makamnn_utils import load_data
-from makamnn_utils import plot_confusion_matrix
-from makamnn_utils import get_args_automatic_classification
-import pickle
+from sklearn.model_selection import cross_val_score
+from pitchdistamr_utils import load_data
+from pitchdistamr_utils import plot_confusion_matrix
+from pitchdistamr_utils import get_args_automatic_classification
 
 
 def main(use_model,
-         hyperparameter_opt,
+         hyperparameter_tune,
          features_csv,
          classes_csv,
          hidden_layers,
@@ -22,17 +22,18 @@ def main(use_model,
          model_name,
          iterations
          ):
-    """ This method performs automatic classification with one-hidden-layer
+    """
+        This method performs automatic classification with one-hidden-layer
         MLP model. features_csv should contain pitch distributions and be
         formatted as each row is an instance, e.g. a recording, and each
         column is the respective bin of the distribution. classes_csv should
         contain mode information as each row is the mode of an instance. To
         use an existing model and predict the modes of the instances in
         features_csv file, use_model should be 1. To perform cross validation
-        and hyperparameter optimization with the given lists of parameters,
-        use_model should be 0 and hyperparameter_opt should be 1. To divide
+        and hyperparameter tuning with the given lists of parameters,
+        use_model should be 0 and hyperparameter_tune should be 1. To divide
         the dataset into training and test subsets without cross validation,
-        use_model and hyperparameter_opt should be 0. For the last case, the
+        use_model and hyperparameter_tune should be 0. For the last case, the
         first element of the lists of parameters will be considered for the
         MLP model.
 
@@ -40,7 +41,7 @@ def main(use_model,
         ----------
         use_model : int
             If 1, use the specified model; if 0, create and train a new model
-        hyperparameter_opt : int
+        hyperparameter_tune : int
             If 1, perform hyperparameter classification for cross validation
             ; if 0, perform only cross validation (use_model has to be 0)
         features_csv : str
@@ -49,25 +50,25 @@ def main(use_model,
             Name of the csv file containing class values of
             instances (use_model has to be 0)
         hidden_layers : List[int]
-            If hyperparameter_opt is 1, the list of number of nodes for
+            If hyperparameter_tune is 1, the list of number of nodes for
             one-hidden-layer MLP model to be used in hyperparameter
-            optimization. If hyperparameter_opt is 0, list[0] is the
+            tuning. If hyperparameter_tune is 0, list[0] is the
             number of nodes for one-hidden-layer MLP model to be used
             in cross validation.
         alphas : List[float]
-            If hyperparameter_opt is 1, the list of alpha coefficients for
-            the MLP model to be used in hyperparameter optimization.
-            If hyperparameter_opt is 0, list[0] is the alpha coefficient for
+            If hyperparameter_tune is 1, the list of alpha coefficients for
+            the MLP model to be used in hyperparameter tuning.
+            If hyperparameter_tune is 0, list[0] is the alpha coefficient for
             the MLP model to be used in cross validation.
         learning_rates : List[float]
-            If hyperparameter_opt is 1, the list of learning rates for
-            the MLP model to be used in hyperparameter optimization.
-            If hyperparameter_opt is 0, list[0] is the learning rate for
+            If hyperparameter_tune is 1, the list of learning rates for
+            the MLP model to be used in hyperparameter tuning.
+            If hyperparameter_tune is 0, list[0] is the learning rate for
             the MLP model to be used in cross validation.
         momenta : List[float]
-            If hyperparameter_opt is 1, the list of momentum coefficients for
-            the MLP model to be used in hyperparameter optimization.
-            If hyperparameter_opt is 0, list[0] is momentum coefficient for
+            If hyperparameter_tune is 1, the list of momentum coefficients for
+            the MLP model to be used in hyperparameter tuning.
+            If hyperparameter_tune is 0, list[0] is momentum coefficient for
             the MLP model to be used in cross validation.
         iterations : int
             Number of iterations for cross validation and evaluation steps
@@ -106,15 +107,15 @@ def main(use_model,
                                                    test_size=0.1,
                                                    stratify=classes,
                                                    random_state=k)
-            # checking whether to perform hyperparameter optimization
-            if hyperparameter_opt == 1:
-                # getting hyperparameters from optimization
-                params = hyperp_optimization(train_features=x_train,
-                                             train_classes=y_train,
-                                             hidden_layers=hidden_layers,
-                                             alphas=alphas,
-                                             learning_rates=learning_rates,
-                                             momenta=momenta)
+            # checking whether to perform hyperparameter tuning
+            if hyperparameter_tune == 1:
+                # getting hyperparameters from tuning
+                params = hyperp_tuning(train_features=x_train,
+                                       train_classes=y_train,
+                                       hidden_layers=hidden_layers,
+                                       alphas=alphas,
+                                       learning_rates=learning_rates,
+                                       momenta=momenta)
             else:
                 # using the hyperparameters the user provides
                 params = {'hl': hidden_layers[0],
@@ -163,12 +164,12 @@ def main(use_model,
               + '%')
 
 
-def hyperp_optimization(train_features,
-                        train_classes,
-                        hidden_layers,
-                        alphas,
-                        learning_rates,
-                        momenta):
+def hyperp_tuning(train_features,
+                  train_classes,
+                  hidden_layers,
+                  alphas,
+                  learning_rates,
+                  momenta):
     """
 
         Parameters
@@ -223,9 +224,8 @@ def hyperp_optimization(train_features,
                     cvl_r[h_index][a_index][l_index][m_index] = cvl
                     iteration = iteration + 1
 
-                    print('Iteration ' + str(iteration) + ' is being performed'
-                                                          ' for hyperparameter'
-                                                          ' optimization.')
+                    print('Hyperparameter combination ' + str(iteration)
+                          + ' is being performed for hyperparameter tuning.')
                     m_index += 1
                 l_index += 1
             a_index += 1
@@ -243,7 +243,7 @@ def hyperp_optimization(train_features,
 if __name__ == "__main__":
     args = get_args_automatic_classification()
     main(use_model=args['use_model'],
-         hyperparameter_opt=args['hyperparameter_opt'],
+         hyperparameter_tune=args['hyperparameter_tune'],
          features_csv=args['features_csv'],
          classes_csv=args['classes_csv'],
          hidden_layers=args['hidden_layers'],

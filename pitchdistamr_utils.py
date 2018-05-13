@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import itertools
 import numpy as np
 import pandas as pd
-from typing import List
 
 
 def get_args_download_makam_dataset():
@@ -15,35 +14,29 @@ def get_args_download_makam_dataset():
         Returns
         -------
         dictionary : dict
-            use_model : int
-                If 1, use the specified model; if 0, create and train a new model
-            hyperparameter_opt : int
-                If 1, perform hyperparameter classification for cross validation
-                ; if 0, perform only cross validation (use_model has to be 0)
-            features_csv : str
-                Name of the csv file containing feature values of instances
-            classes_csv : str
-                Name of the csv file containing class values of
-                instances
+            directory : str
+                Target directory to download the dataset into
 
     """
-    parser = argparse.ArgumentParser(description='To download the '
-                                                 'Makam Recognition '
-                                                 'Dataset')
+    parser = argparse.ArgumentParser(description='Downloads OTMM Makam '
+                                                 'Recognition Dataset from '
+                                                 'https://github.com/MTG/'
+                                                 'otmm_makam_recognition_'
+                                                 'dataset/')
     parser.add_argument('-d',
                         '--directory',
                         type=str,
                         help='Target directory for the downloaded files.'
-                             'Type is string. Default is data/dataset/.',
-                        default='data/dataset/'
+                             'Type is string. Default is data/.',
+                        default='data/'
                         )
     args = parser.parse_args()
 
     return {'directory': args.directory}
 
 
-def get_args_compute_pitch_histograms():
-    """ Argument parser for computepitchhistograms.py
+def get_args_compute_pitch_distribution():
+    """ Argument parser for computepitchdistribution.py
 
         Returns
         -------
@@ -51,7 +44,7 @@ def get_args_compute_pitch_histograms():
             number_of_bins : int
                 Number of comma values to divide between 0 and 1200 cent
             first_last_pct : int
-                Whether to include the first and the last x% sections
+                Whether to include the first and the last sections
             pct : float
                 Percentage value for the first and the last sections
             annot : int
@@ -62,39 +55,33 @@ def get_args_compute_pitch_histograms():
                 Whether to use the estimated tonic frequencies from
                 the annotations file
             folder_dir : str
-                Path to the directory of the files
+                Directory of the recordings
             features_save_name : str
                 File name for storing feature values
             classes_save_name : str
                 File name for storing class values
     """
-    parser = argparse.ArgumentParser(description='This method computes '
-                                                 'pitch distributions of '
-                                                 'given recordings by '
-                                                 'aligning them with respect '
-                                                 'to the tonic frequency. The '
-                                                 'obtained distributions are '
-                                                 'saved as a csv file. There '
-                                                 'are several options on how '
-                                                 'to use this file. To use '
-                                                 'the mode information '
-                                                 'specified in annotations '
-                                                 'file, annot should be 1. '
-                                                 'To use the already extracted'
-                                                 ' pitch values from the '
-                                                 'directory, pitch_files '
+    parser = argparse.ArgumentParser(description='This method computes pitch '
+                                                 'distributions of target '
+                                                 'recordings and aligns the '
+                                                 'obtained distributions with'
+                                                 ' respect to the tonic '
+                                                 'frequency. The obtained '
+                                                 'distributions are saved as '
+                                                 'a csv file. To use the mode '
+                                                 'information specified in '
+                                                 'annotations file, annot '
                                                  'should be 1. To use the '
-                                                 'already estimated tonic '
-                                                 'frequencies included in '
-                                                 'annotations file, '
-                                                 'annot_tonic should be 1. '
-                                                 'If the mode information is '
-                                                 'to be used, the directory '
-                                                 'for folder_dir should '
-                                                 'include the recordings '
-                                                 'separated by their modes '
-                                                 'in the following way: '
-                                                 'your_dir/mode_A/rec_1.wav')
+                                                 'already extracted pitch '
+                                                 'values from the directory,'
+                                                 ' pitch_files should be 1. '
+                                                 'To use the already '
+                                                 'estimated tonic frequencies'
+                                                 ' included in annotations '
+                                                 'file, annot_tonic should be'
+                                                 ' 1. For the required folder'
+                                                 ' structure, README file can '
+                                                 'be referred.')
     parser.add_argument('-n',
                         '--number_of_bins',
                         type=int,
@@ -145,7 +132,7 @@ def get_args_compute_pitch_histograms():
                         type=str,
                         default='data/otmm_makam_recognition_dataset'
                                 '-dlfm2016/',
-                        help='Path to the directory of the files. '
+                        help='Directory of the files. '
                              'Type is string. Default is '
                              'data/otmm_makam_recognition_dataset-dlfm2016/')
     parser.add_argument('-fs',
@@ -244,7 +231,7 @@ def get_args_compare_two_modes():
             number_of_bins : int
                 Number of comma values to divide between 0 and 1200 cent
             first_last_pct : int
-                Whether to include the first and the last x% sections
+                Whether to include the first and the last sections
             features_csv : str
                 Name of the csv file containing feature values of instances
             classes_csv : str
@@ -316,7 +303,7 @@ def get_args_automatic_classification():
         dictionary : dict
             use_model : int
                 If 1, use the specified model; if 0, create and train a new model
-            hyperparameter_opt : int
+            hyperparameter_tune : int
                 If 1, perform hyperparameter classification for cross validation
                 ; if 0, perform only cross validation (use_model has to be 0)
             features_csv : str
@@ -325,24 +312,24 @@ def get_args_automatic_classification():
                 Name of the csv file containing class values of
                 instances (use_model has to be 0)
             hidden_layers : List[int]
-                If hyperparameter_opt is 1, the list of number of nodes for
-                one-hidden-layer MLP model to be used in hyperparameter optimization.
-                If hyperparameter_opt is 0, list[0] is the number of nodes for
+                If hyperparameter_tune is 1, the list of number of nodes for
+                one-hidden-layer MLP model to be used in hyperparameter tuning.
+                If hyperparameter_tune is 0, list[0] is the number of nodes for
                 one-hidden-layer MLP model to be used in cross validation.
             alphas : List[float]
-                If hyperparameter_opt is 1, the list of alpha coefficients for
-                the MLP model to be used in hyperparameter optimization.
-                If hyperparameter_opt is 0, list[0] is the alpha coefficient for
+                If hyperparameter_tune is 1, the list of alpha coefficients for
+                the MLP model to be used in hyperparameter tuning.
+                If hyperparameter_tune is 0, list[0] is the alpha coefficient for
                 the MLP model to be used in cross validation.
             learning_rates : List[float]
-                If hyperparameter_opt is 1, the list of learning rates for
-                the MLP model to be used in hyperparameter optimization.
-                If hyperparameter_opt is 0, list[0] is the learning rate for
+                If hyperparameter_tune is 1, the list of learning rates for
+                the MLP model to be used in hyperparameter tuning.
+                If hyperparameter_tune is 0, list[0] is the learning rate for
                 the MLP model to be used in cross validation.
             momenta : List[float]
-                If hyperparameter_opt is 1, the list of momentum coefficients for
-                the MLP model to be used in hyperparameter optimization.
-                If hyperparameter_opt is 0, list[0] is momentum coefficient for
+                If hyperparameter_tune is 1, the list of momentum coefficients for
+                the MLP model to be used in hyperparameter tuning.
+                If hyperparameter_tune is 0, list[0] is momentum coefficient for
                 the MLP model to be used in cross validation.
             iterations : int
                 Number of iterations for cross validation and evaluation steps
@@ -368,15 +355,15 @@ def get_args_automatic_classification():
                                                  'file, use_model should be 1.'
                                                  ' To perform cross validation'
                                                  ' and hyperparameter '
-                                                 'optimization with the given '
+                                                 'tuning with the given '
                                                  'lists of parameters, '
                                                  'use_model should be 0 and '
-                                                 'hyperparameter_opt should '
+                                                 'hyperparameter_tune should '
                                                  'be 1. To divide the dataset '
                                                  'into training and test '
                                                  'subsets without cross '
                                                  'validation, use_model and '
-                                                 'hyperparameter_opt should '
+                                                 'hyperparameter_tune should '
                                                  'be 0. For the last case, '
                                                  'the first element of the '
                                                  'lists of parameters will '
@@ -389,14 +376,13 @@ def get_args_automatic_classification():
                              'create and train a new model. Default is 0',
                         default=0,
                         choices=(0, 1))
-    parser.add_argument('-hpo',
-                        '--hyperparameter_opt',
+    parser.add_argument('-hpt',
+                        '--hyperparameter_tune',
                         type=int,
                         default=1,
                         choices=(0, 1),
-                        help='If 1, perform hyperparameter classification '
-                             'for cross validation; if 0, perform only cross '
-                             'validation (use_model has to be 0). '
+                        help='If 1, perform hyperparameter tuning '
+                             'with cross validation (use_model has to be 0). '
                              'Default is 1.')
     parser.add_argument('-f',
                         '--features_csv',
@@ -417,10 +403,10 @@ def get_args_automatic_classification():
                         type=int,
                         nargs="*",
                         default=[30, 50, 70, 90, 110, 130, 150, 170, 190],
-                        help='If hyperparameter_opt is 1, the list of '
+                        help='If hyperparameter_tune is 1, the list of '
                              'number of nodes for one-hidden-layer MLP model '
-                             'to be used in hyperparameter optimization. '
-                             'If hyperparameter_opt is 0, list[0] is the '
+                             'to be used in hyperparameter tuning. '
+                             'If hyperparameter_tune is 0, list[0] is the '
                              'number of nodes for one-hidden-layer MLP model '
                              'to be used in cross validation. '
                              'Type is list of integers. Default is'
@@ -430,10 +416,10 @@ def get_args_automatic_classification():
                         type=float,
                         nargs="*",
                         default=[0.1, 0.01, 0.001],
-                        help='If hyperparameter_opt is 1, the list of '
+                        help='If hyperparameter_tune is 1, the list of '
                              'alpha coefficients for the MLP model to be '
-                             'used in hyperparameter optimization. '
-                             'If hyperparameter_opt is 0, list[0] is '
+                             'used in hyperparameter tuning. '
+                             'If hyperparameter_tune is 0, list[0] is '
                              'the alpha coefficient for the MLP model '
                              'to be used in cross validation.'
                              'Type is list of floats. Default is'
@@ -443,10 +429,10 @@ def get_args_automatic_classification():
                         type=float,
                         nargs="*",
                         default=[0.1, 0.01, 0.001],
-                        help='If hyperparameter_opt is 1, the list of '
+                        help='If hyperparameter_tune is 1, the list of '
                              'learning rates for the MLP model to '
-                             'be used in hyperparameter optimization. '
-                             'If hyperparameter_opt is 0, list[0] is '
+                             'be used in hyperparameter tuning. '
+                             'If hyperparameter_tune is 0, list[0] is '
                              'the learning rate for the MLP model to be '
                              'used in cross validation.'
                              'Type is list of floats. Default is'
@@ -456,10 +442,10 @@ def get_args_automatic_classification():
                         type=float,
                         nargs="*",
                         default=[0.5, 0.7, 0.9],
-                        help='If hyperparameter_opt is 1, the list of '
+                        help='If hyperparameter_tune is 1, the list of '
                              'momentum coefficients for the MLP model '
-                             'to be used in hyperparameter optimization. '
-                             'If hyperparameter_opt is 0, list[0] is '
+                             'to be used in hyperparameter tuning. '
+                             'If hyperparameter_tune is 0, list[0] is '
                              'momentum coefficient for the MLP model to be '
                              'used in cross validation.'
                              'Type is list of floats. Default is'
@@ -480,13 +466,9 @@ def get_args_automatic_classification():
                              'Default is model.')
 
     args = parser.parse_args()
-    
-    print(args.hidden_layers)
-    print(args.momenta)
-    print(args.learning_rates)
 
     return {'use_model': args.use_model,
-            'hyperparameter_opt': args.hyperparameter_opt,
+            'hyperparameter_tune': args.hyperparameter_tune,
             'features_csv': args.features_csv,
             'classes_csv': args.classes_csv,
             'hidden_layers': args.hidden_layers,
@@ -594,12 +576,10 @@ def plot_confusion_matrix(cm, classes,
             Confusion matrix to plot
         classes : numpy.ndarray
             All class values
-        title : str
-            Title of the plot
         cmap : plt.cm
             Color map to use for the plot
 
-        """
+    """
     class_names = np.unique(classes)
     plt.figure(figsize=(9, 9),)
     plt.imshow(cm, interpolation='nearest', cmap=cmap)

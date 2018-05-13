@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy as np
-from makamnn_utils import load_data
-from makamnn_utils import get_args_compare_two_modes
+import matplotlib.pyplot as plt
+from pitchdistamr_utils import load_data
+from pitchdistamr_utils import get_args_compare_two_modes
 
 
 def main(first_mode,
@@ -10,8 +10,8 @@ def main(first_mode,
          first_last_pct,
          features_csv,
          classes_csv):
-    """ This method plots the average pitch histograms of given modes
-        in order to compare them
+    """
+        This method plots the average pitch histograms of two given modes
 
         Parameters
         ----------
@@ -22,7 +22,7 @@ def main(first_mode,
         number_of_bins : int
             Number of comma values to divide between 0 and 1200 cent
         first_last_pct : int
-            Whether to include the first and the last x% sections
+            Whether to include the first and the last sections
         features_csv : str
             Name of the csv file containing feature values of instances
         classes_csv : str

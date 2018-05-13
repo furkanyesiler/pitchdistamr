@@ -1,18 +1,20 @@
-import matplotlib.pyplot as plt
 import numpy as np
-from makamnn_utils import load_data
-from makamnn_utils import get_args_compute_dendrogram
+import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import linkage
 from scipy.cluster.hierarchy import dendrogram
+from pitchdistamr_utils import load_data
+from pitchdistamr_utils import get_args_compute_dendrogram
 
 
 def main(features_csv,
          classes_csv,
          distance_func,
          number_of_bins):
-    """ This method computes the distances of average pitch distributions
-        of modes and forms hierarchical clustering
+    """
+        This method computes the distances of average pitch distributions
+        of modes and forms hierarchical clusters based on distances
+        of pitch distribution templates
 
         Parameters
         -------
