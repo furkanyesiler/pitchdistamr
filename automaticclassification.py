@@ -175,18 +175,17 @@ def hyperp_tuning(train_features,
         Parameters
         ----------
         train_features : numpy.ndarray
-            Number of comma values to divide between 0 and 1200 cent
+            Feature values for cross validation
         train_classes : numpy.ndarray
-            Whether to include the first and the last x% values
+            Class values for cross validation
         hidden_layers : List[int]
-            Whether to use the already extracted pitch files
+            Hidden layer sizes to use in hyperparameter tuning
         alphas : List[float]
-            Whether to use the estimated tonic frequencies from
-            the annotations file
+            Alpha coefficients to use in hyperparameter tuning
         learning_rates : List[float]
-            Path to the directory of the files
+            Learning rates to use in hyperparameter tuning
         momenta : List[float]
-            File name for the stored feature values
+            Momentum coefficients to use in hyperparameter tuning
 
     """
     # variable for iteration number
