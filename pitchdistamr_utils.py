@@ -179,10 +179,13 @@ def get_args_compute_dendrogram():
 
     """
     parser = argparse.ArgumentParser(description='This method computes the '
-                                                 'distances of average pitch '
-                                                 'distributions of modes and '
-                                                 'forms hierarchical '
-                                                 'clustering')
+                                                 'distances between average '
+                                                 'pitch distributions of '
+                                                 'modes and forms '
+                                                 'hierarchical clusters '
+                                                 'based on distances of '
+                                                 'pitch distribution '
+                                                 'templates')
     parser.add_argument('-f',
                         '--features_csv',
                         type=str,
@@ -200,7 +203,7 @@ def get_args_compute_dendrogram():
     parser.add_argument('-d',
                         '--distance_func',
                         type=str,
-                        help='Distance function to use. Type is string.'
+                        help='Distance function to use. Type is string. '
                              'Default is canberra.',
                         default='canberra')
     parser.add_argument('-n',
