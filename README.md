@@ -1,5 +1,5 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/) 
-# Pitch Distribution Based Supervised Mode Recognition Toolbox
+# Pitch Distribution Based Culture-Specific Mode Recognition Toolbox
 
 ## Introduction
 This repository contains python files to compute pitch distributions aligned with the respected tonic frequencies of recordings and to perform supervised mode recognition. It uses culture-specific algorithms for Turkish Makam Music to obtain pitch distributions. For supervised mode recognition, a Multi-Layer Perceptron (MLP) model is used. The proposed method outperforms previous works on Turkish Makam Recognition Dataset.
