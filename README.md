@@ -75,7 +75,7 @@ After obtaining pitch distributions and modes as csv files, two use cases can be
 
 After obtaining pitch distributions of the recordings as a csv file, the model trained with the entire dataset can be used to predict the modes of respective recordings.
 
-Please refer to the Demo.ipynb for a demonstration of this toolbox.
+Please refer to the [Demo.ipynb](https://github.com/furkanyesiler/pitchdistamr/blob/master/Demo.ipynb) for a demonstration of this toolbox.
 
 ## Installation
 
