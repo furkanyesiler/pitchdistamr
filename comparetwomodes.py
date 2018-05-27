@@ -37,39 +37,55 @@ def main(first_mode,
 
     fig = plt.figure(figsize=(15, 4))
 
-    plt.subplot(1, 3, 1)
+    ax1 = fig.add_subplot(131)
     avg_f_e = np.mean(features[np.where((classes == first_mode))],
                       axis=0)[:number_of_bins]
-    plt.plot(avg_f_e, color='r', linestyle='--', label=first_mode)
+    ax1.plot(avg_f_e, color='r', linestyle='--', label=first_mode)
     avg_s_e = np.mean(features[np.where((classes == second_mode))],
                       axis=0)[:number_of_bins]
-    plt.plot(avg_s_e, color='b', label=second_mode)
-    plt.xticks([])
-    plt.legend(prop=legend_properties, loc='best')
-    plt.title('Entire Recording', weight='bold')
+    ax1.plot(avg_s_e, color='b', label=second_mode)
+    ax1.tick_params(axis='both', which='both', bottom='off',
+                    labelbottom='off', right='off', left='off',
+                    labelleft='off')
+    ax1.set_ylabel('Relative Occurances', labelpad=10, weight='bold')
+    ax1.set_xlabel('Pitch class with respect to tonic (cents)',
+                   labelpad=10, weight='bold')
+    ax1.legend(prop=legend_properties, loc='best')
+    ax1.set_title('Entire Recording', weight='bold')
 
     if first_last_pct == 1:
-        plt.subplot(1, 3, 2)
+        ax2 = fig.add_subplot(132)
         avg_f_f = np.mean(features[np.where((classes == first_mode))],
                           axis=0)[number_of_bins:number_of_bins * 2]
-        plt.plot(avg_f_f, color='r', linestyle='--', label=first_mode)
+        ax2.plot(avg_f_f, color='r', linestyle='--', label=first_mode)
         avg_s_f = np.mean(features[np.where((classes == second_mode))],
                           axis=0)[number_of_bins:number_of_bins * 2]
-        plt.plot(avg_s_f, color='b', label=second_mode)
+        ax2.plot(avg_s_f, color='b', label=second_mode)
         plt.xticks([])
-        plt.legend(prop=legend_properties, loc='best')
-        plt.title('First Section', weight='bold')
+        ax2.tick_params(axis='both', which='both', bottom='off',
+                        labelbottom='off', right='off', left='off',
+                        labelleft='off')
+        ax2.set_ylabel('Relative Occurances', labelpad=10, weight='bold')
+        ax2.set_xlabel('Pitch class with respect to tonic (cents)',
+                       labelpad=10, weight='bold')
+        ax2.legend(prop=legend_properties, loc='best')
+        ax2.set_title('First Section', weight='bold')
 
-        plt.subplot(1, 3, 3)
+        ax3 = fig.add_subplot(133)
         avg_f_l = np.mean(features[np.where((classes == first_mode))],
                           axis=0)[number_of_bins * 2:]
-        plt.plot(avg_f_l, color='r', linestyle='--', label=first_mode)
+        ax3.plot(avg_f_l, color='r', linestyle='--', label=first_mode)
         avg_s_l = np.mean(features[np.where((classes == second_mode))],
                           axis=0)[number_of_bins * 2:]
-        plt.plot(avg_s_l, color='b', label=second_mode)
-        plt.xticks([])
-        plt.legend(prop=legend_properties, loc='best')
-        plt.title('Last Section', weight='bold')
+        ax3.plot(avg_s_l, color='b', label=second_mode)
+        ax3.tick_params(axis='both', which='both', bottom='off',
+                        labelbottom='off', right='off', left='off',
+                        labelleft='off')
+        ax3.set_ylabel('Relative Occurances', labelpad=10, weight='bold')
+        ax3.set_xlabel('Pitch class with respect to tonic (cents)',
+                       labelpad=10, weight='bold')
+        ax3.legend(prop=legend_properties, loc='best')
+        ax3.set_title('Last Section', weight='bold')
 
     plt.show()
 
