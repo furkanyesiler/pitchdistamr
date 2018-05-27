@@ -1,16 +1,19 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/) 
-# Pitch Distribution Based Culture-Specific Mode Recognition Toolbox
+# Pitch Distribution Based Culture-Specific Mode Recognition
 
 ## Introduction
 This repository contains python files to compute pitch distributions aligned with the respected tonic frequencies of recordings and to perform supervised mode recognition. It uses culture-specific algorithms for Turkish Makam Music to obtain pitch distributions. For supervised mode recognition, a Multi-Layer Perceptron (MLP) model is used. The proposed method outperforms previous works on Turkish Makam Recognition Dataset.
 
-Please cite the publication below, if you use the toolbox in your work:
+Please cite the publication below, if you use the repository in your work:
 
 > F. Yesiler, B. Bozkurt and X. Serra. "Makam Recognition Using Extended Pitch Distribution Features and Multi-Layer Perceptrons". In 15th Sound and Music Computing Conference, Limassol, Cyprus, 2018.
 
-This toolbox is mainly created to provide a straightforward access to pitch distribution computation and supervised mode recognition tasks. Currently, the algorithms for [pitch extraction](https://github.com/sertansenturk/predominantmelodymakam) and [tonic frequency estimation](https://github.com/hsercanatli/tonicidentifier_makam) are culture-specific for Turkish Makam Music. An extension that includes other music traditions such as Hindustani Music and Carnatic Music will be the next step of this toolbox.
+This repository is mainly created to provide a straightforward access to pitch distribution computation and supervised mode recognition tasks. Currently, the algorithms for [pitch extraction](https://github.com/sertansenturk/predominantmelodymakam) and [tonic frequency estimation](https://github.com/hsercanatli/tonicidentifier_makam) are culture-specific for Turkish Makam Music. An extension that includes other music traditions such as Hindustani Music and Carnatic Music will be the next step of this work.
 
 ## Usage
+
+Please refer to the [Demo.ipynb](https://github.com/furkanyesiler/pitchdistamr/blob/master/Demo.ipynb) for a demonstration of this repository.
+
 ### Pitch Distribution Computation
 
 To compute pitch distributions, following cases can be considered:
@@ -75,11 +78,9 @@ After obtaining pitch distributions and modes as csv files, two use cases can be
 
 After obtaining pitch distributions of the recordings as a csv file, the model trained with the entire dataset can be used to predict the modes of respective recordings.
 
-Please refer to the [Demo.ipynb](https://github.com/furkanyesiler/pitchdistamr/blob/master/Demo.ipynb) for a demonstration of this toolbox.
-
 ## Installation
 
-This toolbox is written with Python 3. The list of libraries that are required are below:
+This repository is written with Python 3. The list of libraries that are required are below:
 ```
 numpy
 scikit-learn
@@ -89,7 +90,7 @@ Essentia
 ```
 The instructions for installing Essentia can be found [here](http://essentia.upf.edu/documentation/installing.html)
 
-**An alternative way** for using this toolbox is to install 'Docker'. Docker provides an easy access to a virtual environment with desired libraries. All the necessary libraries for this toolbox are installed and compiled in ['MIR-Toolbox'](https://github.com/MTG/MIR-toolbox-docker), a docker image created for Music Information Retrieval applications.
+**An alternative way** for using this repository is to install 'Docker'. Docker provides an easy access to a virtual environment with desired libraries. All the necessary libraries for this repository are installed and compiled in ['MIR-Toolbox'](https://github.com/MTG/MIR-toolbox-docker), a docker image created for Music Information Retrieval applications.
 
 The required installation steps are:
 * Install [Docker Compose](https://docs.docker.com/compose/install/).
