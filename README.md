@@ -12,7 +12,7 @@ This repository is mainly created to provide a straightforward access to pitch d
 
 ## Usage
 
-Please refer to the [Demo.ipynb](https://github.com/furkanyesiler/pitchdistamr/blob/master/Demo.ipynb) for a demonstration of this repository.
+Please refer to the [PitchDistAMR-Demo.ipynb](https://github.com/furkanyesiler/pitchdistamr/blob/master/PitchDistAMR-Demo.ipynb) for a demonstration of this repository.
 
 ### Pitch Distribution Computation
 
