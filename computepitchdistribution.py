@@ -30,8 +30,7 @@ def main(number_of_bins,
         file, 'annot_tonic' should be 1. For the required folder structure,
         README file can be referred.
 
-        Parameters
-        ----------
+        Parameter
         number_of_bins : int
             Number of comma values to divide between 0 and 1200 cent
         first_last_pct : int
