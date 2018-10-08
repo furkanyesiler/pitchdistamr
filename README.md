@@ -95,15 +95,21 @@ The instructions for installing Essentia can be found [here](http://essentia.upf
 The required installation steps are:
 * Install [Docker Compose](https://docs.docker.com/compose/install/).
 * Clone this repository as follows:
-```
-git clone https://github.com/furkanyesiler/pitchdistamr.git
-```
-* In terminal, go to the directory of the repository.
-* Initiate the Docker Image by using the following command (it may require admin permissions):
-```
-sudo docker-compose up
-```
-* Access localhost:8888 on your browser, and when asked for a password, use *mir*.
+
+        git clone https://github.com/furkanyesiler/pitchdistamr.git
+
+In a terminal/console window, change to this directory
+
+On MacOS or Windows, run:
+
+    docker-compose up
+
+On Linux, run the following (this command ensures that any files you create are owned by your own user):
+
+    JUPYTER_USER_ID=$(id -u) docker-compose up
+
+Then accesss http://localhost:8888 with your browser and when asked for a
+password use ***mir***
 
 ## Authors
 
